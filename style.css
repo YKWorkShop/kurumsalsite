@@ -1,0 +1,688 @@
+/* ==================== GENEL STİLLER VE DEĞİŞKENLER ==================== */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap'); /* Örnek Fontlar */
+
+:root {
+    /* Renk Paleti */
+    --header-height: 4.5rem;
+    --primary-color: #0A2342; /* Koyu Lacivert - Güven, Profesyonellik */
+    --secondary-color: #FFFFFF; /* Beyaz - Temizlik, Minimalizm */
+    --accent-color: #2CA58D; /* Yeşil/Turkuaz Tonu - Enerji, Seyahat */
+    --accent-color-alt: #D95D39; /* Alternatif Vurgu Rengi - Sıcaklık, Dikkat Çekici (CTA için?) */
+    --text-color: #333333; /* Koyu Gri - Okunabilirlik */
+    --text-color-light: #666666; /* Açık Gri - İkincil Metinler */
+    --body-color: #F8F9FA; /* Çok Açık Gri Arka Plan - Temiz */
+    --container-color: #FFFFFF; /* İçerik Bloklarının Arka Planı */
+    --footer-bg-color: #1a1a1a; /* Koyu Footer Arka Planı */
+    --footer-text-color: #CCCCCC; /* Footer Metin Rengi */
+
+    /* Tipografi */
+    --body-font: 'Roboto', sans-serif;
+    --title-font: 'Montserrat', sans-serif;
+    --biggest-font-size: 2.5rem;
+    --h1-font-size: 2rem;
+    --h2-font-size: 1.5rem;
+    --h3-font-size: 1.25rem;
+    --normal-font-size: 1rem;
+    --small-font-size: 0.875rem;
+    --smaller-font-size: 0.813rem;
+
+    /* Font Ağırlıkları */
+    --font-medium: 500;
+    --font-bold: 700;
+
+    /* Z-Index */
+    --z-tooltip: 10;
+    --z-fixed: 100;
+    --z-modal: 1000;
+}
+
+/* Responsive Tipografi */
+@media screen and (min-width: 968px) {
+    :root {
+        --biggest-font-size: 4rem;
+        --h1-font-size: 3rem;
+        --h2-font-size: 2rem;
+        --h3-font-size: 1.5rem;
+        --normal-font-size: 1.1rem;
+        --small-font-size: 0.938rem;
+        --smaller-font-size: 0.875rem;
+    }
+}
+
+/* ==================== TEMEL AYARLAR ==================== */
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    scroll-behavior: smooth; /* Sayfa içi geçişleri yumuşatır */
+}
+
+body {
+    font-family: var(--body-font);
+    font-size: var(--normal-font-size);
+    background-color: var(--body-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    color: var(--primary-color);
+    font-family: var(--title-font);
+    font-weight: var(--font-bold);
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: var(--accent-color); /* Bağlantı rengi */
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--primary-color); /* Hover rengi */
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.container {
+    max-width: 1140px; /* Konteyner genişliği */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.grid {
+    display: grid;
+    gap: 1.5rem; /* Öğeler arası boşluk */
+}
+
+.section {
+    padding: 6rem 0 2rem; /* Bölüm iç boşlukları (üst-alt-sağ/sol) */
+}
+
+.section .title {
+    font-size: var(--h2-font-size);
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    text-align: center; /* Başlıkları ortala */
+}
+
+.section .subtitle {
+    display: block;
+    font-size: var(--small-font-size);
+    color: var(--text-color-light);
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+/* Alternatif bölüm arka planı */
+.section-alt {
+    background-color: var(--container-color); /* Veya hafif farklı bir ton */
+}
+
+/* ==================== HEADER / NAVİGASYON ==================== */
+#header {
+    width: 100%;
+    position: fixed; /* Sayfa kaydırıldığında sabit kalır */
+    top: 0;
+    left: 0;
+    z-index: var(--z-fixed);
+    background-color: rgba(255, 255, 255, 0.9); /* Hafif transparan beyaz */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+}
+
+/* Scroll sonrası header stili için JS ile class eklenebilir (örn: .scrolled) */
+#header.scrolled {
+     background-color: var(--secondary-color); /* Tam opak */
+}
+
+nav.container {
+    height: var(--header-height);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    height: 40px; /* Logo boyutu */
+}
+
+.menu ul {
+    display: flex;
+    gap: 2rem; /* Menü öğeleri arası boşluk */
+}
+
+.nav-link {
+    color: var(--primary-color);
+    font-weight: var(--font-medium);
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover, .nav-link.active-link { /* Aktif link stili */
+    color: var(--accent-color);
+}
+
+/* Mobil menü için stiller (Basit placeholder) */
+.toggle {
+    display: none; /* Masaüstünde gizli */
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .menu {
+        /* Mobil menü stilleri buraya */
+        display: none; /* Başlangıçta gizli */
+        position: absolute;
+        /* ... */
+    }
+    .toggle {
+        display: block; /* Mobilde göster */
+    }
+}
+
+
+/* ==================== SLIDER ALANI ==================== */
+.slider {
+    padding: 0; /* Tam genişlik ve yükseklik için */
+    position: relative;
+}
+
+.swiper-container {
+    width: 100%;
+    height: 80vh; /* Ekran yüksekliğinin %80'i kadar */
+    min-height: 500px;
+}
+
+.swiper-slide {
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.swiper-slide::before { /* Görsel üzerine hafif karartma */
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Siyah overlay */
+}
+
+.slide-content {
+    position: relative; /* Overlay'in üzerinde kalması için */
+    z-index: 2;
+    color: var(--secondary-color); /* Beyaz metin */
+    max-width: 700px;
+    padding: 1rem;
+}
+
+.slide-content h1 {
+    font-size: var(--biggest-font-size);
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}
+
+.slide-content p {
+    font-size: var(--h3-font-size);
+    margin-bottom: 2rem;
+}
+
+/* Slider navigasyon butonları ve pagination stilleri */
+/* (Swiper.js belgelerine göre özelleştirilebilir) */
+
+
+/* ==================== HİZMET BÖLÜMLERİ (Uçuş, Otel, Vize) ==================== */
+#ucus .grid, #otel .grid, #vize .grid {
+    grid-template-columns: repeat(2, 1fr); /* İki sütunlu yapı */
+    align-items: center;
+    gap: 3rem;
+}
+
+/* Tek numaralı bölümlerde resim solda, çift numaralılarda sağda */
+#otel .grid {
+    direction: rtl; /* İçeriğin sırasını ters çevirir */
+}
+#otel .grid > * {
+    direction: ltr; /* İçerik elemanlarının yönünü düzeltir */
+}
+
+.section .text ul {
+    margin-top: 1.5rem;
+    padding-left: 0; /* Liste başı boşluğunu sıfırla */
+}
+
+.section .text ul li {
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+}
+
+.section .text ul li i {
+    color: var(--accent-color); /* İkon rengi */
+    margin-right: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.section .image img {
+    border-radius: 8px; /* Görsellere hafif köşe yuvarlaklığı */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+@media screen and (max-width: 768px) {
+    #ucus .grid, #otel .grid, #vize .grid {
+        grid-template-columns: 1fr; /* Mobilde tek sütun */
+        text-align: center;
+    }
+    #otel .grid {
+        direction: ltr; /* Mobilde yönü sıfırla */
+    }
+    .section .image {
+        order: -1; /* Mobilde resmi üste al */
+        margin-bottom: 2rem;
+    }
+     .section .text ul {
+        padding-left: 1rem; /* Mobilde listeye biraz iç boşluk */
+        text-align: left;
+    }
+}
+
+/* ==================== İLETİŞİMLE BİLGİ ALMA (CTA) ==================== */
+.cta-section {
+    background-color: var(--primary-color); /* Ana renk arka plan */
+    color: var(--secondary-color);
+    padding: 4rem 0;
+}
+
+.cta-section .title {
+    color: var(--secondary-color); /* Başlık rengini beyaz yap */
+}
+
+.cta-section p {
+    color: rgba(255, 255, 255, 0.8); /* Hafif soluk beyaz */
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap; /* Mobilde alt alta gelmesi için */
+    margin-bottom: 1rem;
+}
+
+.cta-buttons .button {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: var(--font-medium);
+    border-radius: 5px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.cta-buttons .button:hover {
+    transform: translateY(-3px);
+}
+
+.phone-button {
+    background-color: var(--accent-color); /* Yeşil tonu */
+    color: var(--secondary-color);
+}
+.phone-button:hover {
+    background-color: #238c75; /* Hoverda biraz koyu yeşil */
+}
+
+.whatsapp-button {
+    background-color: #25D366; /* WhatsApp yeşili */
+    color: var(--secondary-color);
+}
+.whatsapp-button:hover {
+    background-color: #1EAE53; /* Hoverda biraz koyu WhatsApp yeşili */
+}
+
+.cta-buttons .button i {
+    margin-right: 0.5rem;
+}
+
+.cta-note {
+     font-size: var(--small-font-size);
+     color: rgba(255, 255, 255, 0.6);
+}
+
+
+/* ==================== HAKKIMIZDA ==================== */
+#hakkimizda .about-content {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Esnek sütunlar */
+    align-items: center;
+    gap: 3rem;
+}
+
+.about-text h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: var(--h3-font-size);
+}
+
+.about-text ul {
+    margin-top: 1rem;
+}
+
+.about-text ul li {
+    margin-bottom: 0.7rem;
+    display: flex;
+    align-items: center;
+}
+.about-text ul li i {
+    color: var(--accent-color);
+    margin-right: 0.5rem;
+}
+
+.about-image img {
+     border-radius: 8px;
+     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.founder-quote { /* Kurucu sözü stili (isteğe bağlı) */
+    font-style: italic;
+    color: var(--text-color-light);
+    margin-top: 1rem;
+    text-align: center;
+}
+
+/* ==================== REFERANSLAR ==================== */
+/* Testimonial Slider stilleri (kullanılacak kütüphaneye göre) */
+.testimonial-slider {
+   /* Örn: Swiper.js için */
+   max-width: 800px;
+   margin: 2rem auto 0 auto;
+   /* Diğer slider stilleri */
+}
+
+.testimonial-item {
+    background-color: var(--container-color);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+.testimonial-item p {
+    font-style: italic;
+    margin-bottom: 1rem;
+    color: var(--text-color-light);
+}
+
+.testimonial-item h4 {
+    font-size: var(--normal-font-size);
+    color: var(--primary-color);
+    font-weight: var(--font-medium);
+}
+
+.client-logos { /* Referans logoları alanı */
+    margin-top: 4rem;
+    border-top: 1px solid #eee;
+    padding-top: 2rem;
+}
+.client-logos h3 {
+    font-size: var(--h3-font-size);
+    color: var(--text-color-light);
+    margin-bottom: 1.5rem;
+}
+.client-logos img {
+    display: inline-block;
+    height: 40px; /* Logo yüksekliği */
+    margin: 0 1rem;
+    filter: grayscale(100%); /* Gri tonlama */
+    opacity: 0.6;
+    transition: filter 0.3s ease, opacity 0.3s ease;
+}
+.client-logos img:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+
+/* ==================== İLETİŞİM ==================== */
+#iletisim .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+    align-items: flex-start; /* Sütunları yukarıdan hizala */
+}
+
+.contact-info div {
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: flex-start; /* İkon ve metni yukarıdan hizala */
+}
+
+.contact-info i {
+    font-size: 1.4rem;
+    color: var(--accent-color);
+    margin-right: 1rem;
+    margin-top: 0.2rem; /* İkonu metinle hizalamak için ince ayar */
+    width: 25px; /* İkonlar için sabit genişlik */
+    text-align: center;
+}
+
+.social-media {
+    margin-top: 2rem;
+}
+.social-media a {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-right: 1rem;
+}
+.social-media a:hover {
+    color: var(--accent-color);
+}
+
+.contact-form .title {
+    text-align: left; /* Form başlığını sola al */
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: var(--body-font);
+    font-size: var(--normal-font-size);
+}
+
+.form-group textarea {
+    min-height: 150px;
+    resize: vertical; /* Sadece dikeyde boyutlandırma */
+}
+
+.contact-form .button {
+    background-color: var(--accent-color);
+    color: var(--secondary-color);
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: var(--font-medium);
+    transition: background-color 0.3s ease;
+}
+.contact-form .button:hover {
+     background-color: #238c75; /* Hover rengi */
+}
+
+.map { /* Harita alanı */
+    margin-top: 3rem;
+    border-radius: 8px;
+    overflow: hidden; /* Köşe yuvarlaklığı için */
+}
+
+@media screen and (max-width: 768px) {
+     #iletisim .grid {
+        grid-template-columns: 1fr; /* Mobilde tek sütun */
+    }
+    .contact-info {
+        margin-bottom: 2rem; /* Formdan önce boşluk bırak */
+    }
+     .contact-form .title {
+        text-align: center; /* Form başlığını ortala */
+    }
+}
+
+
+/* ==================== FOOTER ==================== */
+.footer {
+    background-color: var(--footer-bg-color);
+    color: var(--footer-text-color);
+    padding: 4rem 0 2rem;
+}
+
+.footer-container {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Esnek footer sütunları */
+    gap: 2rem;
+}
+
+.footer .logo img {
+     height: 35px; /* Footer logo boyutu */
+     margin-bottom: 1rem;
+}
+
+.footer h4 {
+    color: var(--secondary-color); /* Footer başlık rengi */
+    font-size: var(--h3-font-size);
+    margin-bottom: 1rem;
+}
+
+.footer ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer ul li a {
+    color: var(--footer-text-color);
+    font-size: var(--small-font-size);
+}
+.footer ul li a:hover {
+    color: var(--accent-color);
+}
+
+.footer p {
+    font-size: var(--small-font-size);
+    line-height: 1.5;
+}
+
+.footer-contact p {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+.footer-contact i {
+    margin-right: 0.5rem;
+    color: var(--accent-color); /* İkon rengi */
+}
+
+.copyright {
+    margin-top: 2rem;
+    font-size: var(--smaller-font-size);
+    color: rgba(204, 204, 204, 0.7); /* Daha soluk telif hakkı metni */
+    grid-column: 1 / -1; /* Telif hakkını tüm sütunlara yay */
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1); /* Ayırıcı çizgi */
+}
+
+.designer { /* Tasarımcı bilgisi (isteğe bağlı) */
+     font-size: var(--smaller-font-size);
+     margin-top: 0.5rem;
+     color: rgba(204, 204, 204, 0.5);
+}
+
+
+/* ==================== YARDIMCI SINIFLAR ==================== */
+.button { /* Genel buton stili */
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    font-weight: var(--font-medium);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* ==================== SCROLL UP BUTONU ==================== */
+.scrollup {
+    position: fixed;
+    right: 1rem;
+    bottom: -20%; /* Başlangıçta gizli */
+    background-color: var(--accent-color);
+    opacity: 0.8;
+    padding: 0.5rem 0.8rem;
+    border-radius: 0.4rem;
+    z-index: var(--z-tooltip);
+    transition: .4s;
+}
+
+.scrollup:hover {
+    background-color: var(--primary-color);
+    opacity: 1;
+}
+
+.scrollup__icon {
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+/* Show scroll */
+.show-scroll {
+    bottom: 3rem;
+}
+
+/* style.css dosyanıza ekleyebilirsiniz */
+
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.5); /* Yarı saydam siyah arka plan */
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    bottom: 3rem; /* Alttan boşluğu biraz artırabiliriz */
+}
+
+/* Belki slider yüksekliğini ayarlamak isterseniz */
+/*
+.carousel-item {
+    height: 80vh;  Ekran yüksekliğinin %80'i 
+    min-height: 500px;
+    background-color: #777;  Resim yüklenmezse diye 
+}
+.carousel-item img {
+    height: 100%;
+    object-fit: cover;  Resmin orantısını koruyarak alanı kaplaması için
+    object-position: center;
+}
+*/
